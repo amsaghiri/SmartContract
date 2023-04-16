@@ -3,18 +3,23 @@
 pragma solidity ^0.6.0;
 
 contract Transfer {
-   	address public tutee;
-    address payable public tutor;
+   	address public sender;
+    address payable public reciver;
     uint256 public cost;
-    constructor(address _tutee, address _tutor, uint256 _cost) public
+    uint256 public balance;
+    uint256 public reciverBalance;
+
+
+   
+    function payment(uint256 _cost, address _sender, address payable _reciver) public 
     {
-        tutee = _tutee;
-        tutor = payable(_tutor);
+        reciver = payable(_reciver);
+        sender = _sender;
         cost = _cost;
-    }
-    function transfer(uint256 delta) public 
-    {
-        require(address(this).balance >= delta, "Insufficient balance in tutee");
-        tutor.transfer(delta);
+        balance= sender.balance;
+        require(sender.balance >= cost/10, "Insufficient balance");
+        reciver.transfer(cost/10);
+        reciverBalance = reciver.balance;
+
     }
 }
